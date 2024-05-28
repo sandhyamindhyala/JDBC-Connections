@@ -32,13 +32,18 @@ for(studentmodel s:st){
 	
  %>
  <tr>
+
 <td><%= s.getPinnum()%></td>
 <td><%= s.getName()%></td>
 <td><%= s.getEmail()%></td>
 <td><%= s.getBranch()%></td>
 <td>
+<a href="update.jsp?Pinnum=<%=s.getPinnum()%>">
 <button>UPDATE</button>
+</a>
+<a href="delete?Pinnum=<%=s.getPinnum() %>">
 <button>DELETE</button>
+</a>
 </td>
 </tr>
 <% } %>

@@ -47,7 +47,7 @@ public class studentservice {
 			ResultSet rs = pmst.executeQuery();
 			while (rs.next()) {
 				s = new studentmodel();
-				rs.getInt(1);
+//				rs.getInt(1);
 				s.setPinnum(rs.getString(2));
 				s.setName(rs.getString(3));
 				s.setEmail(rs.getString(4));
@@ -59,5 +59,62 @@ public class studentservice {
 		}
 		return std;
 	}
+	
+	public boolean deletestu(String Pinnum) {
+		boolean f = false;
+		try {
+			String sql = "delete from student where Pinnum = ?";
+			PreparedStatement pmst = conn.prepareStatement(sql);
+			pmst.setString(1, Pinnum);
+			int i = pmst.executeUpdate();
+			if(i==1) {
+				f = true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return f;
+	}
 
+	public boolean updatestu(studentmodel sm) {
+		boolean f = false;
+		try {
+			String sql = "update student set name = ?,email = ?,branch =? where Pinnum=?";
+			PreparedStatement pmst = conn.prepareStatement(sql);
+			pmst.setString(1, sm.getName());
+			pmst.setString(2, sm.getEmail());
+			pmst.setString(3, sm.getBranch());
+			pmst.setString(4, sm.getPinnum());
+			int i = pmst.executeUpdate();
+			if(i==1) {
+				f = true;
+			}
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return f;
+	}
+		public studentmodel getbystu(String Pinnum) {
+			studentmodel s = null;
+			try {
+				String sql = "select * from student where Pinnum =?";
+				PreparedStatement pmst = conn.prepareStatement(sql);
+				pmst.setString(1, Pinnum);
+				ResultSet rs = pmst.executeQuery();
+				while(rs.next()) {
+					s= new studentmodel();
+					s.setPinnum(rs.getString(1));
+					s.setName(rs.getString(2));
+					s.setEmail(rs.getString(3));
+					s.setBranch(rs.getString(4));
+					
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			return s;
+			
+		}
+	
 }
